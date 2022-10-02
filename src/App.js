@@ -1,19 +1,35 @@
 import React, { Component } from 'react';
 import './App.css';
-import Standing from './components/Standings';
+import Scoreboard from './components/Standings';
 
 class App extends Component {
 
     state = {
         leagues: [
-            { id: 2002, name: 'Bundesliga' },
-            { id: 2014, name: 'Primera Division' },
-            { id: 2015, name: 'Ligue 1' },
-            { id: 2019, name: 'Serie A' },
-            { id: 2021, name: 'Premier League' }
+            { id: 2021, name: 'FBS' }
         ],
         standings: [],
-        selectedLeague: ''
+        selectedLeague: 'FBS'
+    }
+
+    channels = {
+        "ESPN"  : 206,
+        "ESPN2" : 209,
+        "ESPN3" : "Streaming",
+        "ESPNU" : 208,
+        "FS1"   : 219,
+        "FS2"   : 618,
+        "ESPN+" : "Streaming",
+        "ACCN"  : 612,
+        "CBSSN" : 221,
+        "CBS"   : "Local",
+        "FOX"   : "Local",
+        "ABC"   : "Local",
+        "NBC"   : "Local",
+        "SECN"  : 611,
+        "NFL NET": 212,
+        "PAC12" : "Not Available",
+        "BTN"   : "Not Available"
     }
 
     handleSelection = (id, name) => {
@@ -21,26 +37,41 @@ class App extends Component {
     };
 
     fetchData(id, name) {
-        const Token = 'YOUR_API_TOKEN',
-        URL = 'https://api.football-data.org/v2/competitions/' + id + '/standings';
+        URL = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=20220930-20221001&limit=200';
 
-        fetch(URL, { headers: { 'X-Auth-Token': Token } })
+        fetch(URL)
             .then((response) => response.json())
             .then((response) => {
                 const rows = [];
-                response.standings[0].table.map(
+                response.events.map(
                     (item, index) => {
-                        const { position, playedGames, won, draw, lost, goalsFor, goalsAgainst, goalDifference, points, team } = item;
-                      
+                        const { logo, abbreviation, hometeam, shortName, clock, homeScore, awayScore, network, detail, heat} = item;
+
+                        if(response.events[index].competitions[0].broadcasts[0] === undefined){
+                            response.events[index].competitions[0].broadcasts = ([{"names": ["NONE"]}]);
+                        };
+                        
+                        response.events[index].status.heat = (100 - Math.abs(
+                            parseInt(response.events[index].competitions[0].competitors[0].score) - parseInt(response.events[index].competitions[0].competitors[1].score)
+                        ));
+
                         return (
                             rows.push(
-                                { position: position, playedGames: playedGames, won: won, draw: draw, lost: lost, goalsFor: goalsFor, goalsAgainst: goalsAgainst, goalDifference: goalDifference, points: points, team: team.name, badge: team.crestUrl }
+                                { logo: response.events[index].competitions[0].competitors[0].team.logo,
+                                    abbreviation: response.events[index].competitions[0].competitors[0].team.abbreviation, 
+                                    shortName: shortName, 
+                                    clock: response.events[index].status.displayClock, 
+                                    homeScore: response.events[index].competitions[0].competitors[0].score, 
+                                    awayScore: response.events[index].competitions[0].competitors[1].score,
+                                    network: response.events[index].competitions[0].broadcasts[0].names[0], 
+                                    detail: response.events[index].status.type.description,
+                                    heat:  response.events[index].status.heat
+                                }
                             )
                         )
                     }
                 )
                 this.setState({ standings: [...rows] })
-                this.setState({ selectedLeague: name})
         })
             
     }
@@ -51,8 +82,12 @@ class App extends Component {
         let table;
 
         if (content.length > 0) {
-            table = <thead><tr><td colSpan="9"><h3>{this.state.selectedLeague}</h3></td></tr><tr><th className="position">#</th><th className="team" colSpan="2">Team</th><th className="played">Played</th><th className="won">Won</th><th className="draw">Draw</th><th className="lost">Lost</th><th className="ga">GA</th><th className="points">Points</th></tr></thead>;
+            table = <thead><tr><td colSpan="9"><h3>{this.state.selectedLeague}</h3></td></tr><tr><th className="position">Heat</th><th className="team">Home Logo</th><th className="shortname">Shortname</th><th className="played">Clock</th><th className="won">Home Score</th><th className="draw">Away Score</th><th className="lost">Network</th><th className="lost">Status</th><th className="lost">DirecTV Channel</th></tr></thead>;
         }
+
+        content.sort(function(a,b){
+            return b.heat - a.heat
+        });
 
         return (
             <div className="App">
@@ -70,19 +105,19 @@ class App extends Component {
                             {table}
                             <tbody>
                             {this.state.standings.map(standing => (
-                                <Standing
-                                    key={standing.position}
-                                    position={standing.position}
-                                    badge={standing.badge}
-                                    team={standing.team}
-                                    played={standing.playedGames}
-                                    won={standing.won}
-                                    draw={standing.draw}
-                                    lost={standing.lost}
-                                    ga={standing.goalDifference}
-                                    points={standing.points}
-                                >
-                                </Standing>
+                                <Scoreboard
+                                    key={standing.heat}
+                                    heat={standing.heat}
+                                    logo={standing.logo}
+                                    shortName={standing.shortName}
+                                    clock={standing.clock}
+                                    homeScore={standing.homeScore}
+                                    awayScore={standing.awayScore}
+                                    network={standing.network}
+                                    detail={standing.detail}
+                                    channel={this.channels[standing.network]}
+                                >   
+                                </Scoreboard>
                             ))}
                             </tbody>
                         </table>

@@ -1,25 +1,23 @@
 import React, { Component } from 'react';
 
-class Standing extends Component {
+class Scoreboard extends Component {
 
     render() {
-        let symbol = null;
-        if(this.props.ga > 0) { symbol = '+'; }
 
         return(
             <tr>
-                <td>{this.props.position}</td>
-                <td className="badge-td"><div className="badge"><img src={this.props.badge} alt={this.props.team} /></div></td>
-                <td className="text-left">{this.props.team}</td>
-                <td>{this.props.played}</td>
-                <td>{this.props.won}</td>
-                <td>{this.props.draw}</td>
-                <td>{this.props.lost}</td>
-                <td>{symbol}{this.props.ga}</td>
-                <td>{this.props.points}</td>
+                <td>{this.props.heat}</td>
+                <td className="badge-td"><div className="badge"><img src={this.props.logo} alt={this.props.abbreviation} /></div></td>
+                <td>{this.props.shortName}</td>
+                <td>{this.props.clock}</td>
+                <td>{this.props.homeScore}</td>
+                <td>{this.props.awayScore}</td>
+                <td>{this.props.network}</td>
+                <td>{this.props.detail}</td>
+                <td>{this.props.channel}</td>
             </tr>
         )
     }
 };
 
-export default Standing;
+export default Scoreboard;
