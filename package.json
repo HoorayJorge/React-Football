@@ -6,7 +6,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
-    "serialize-javascript": "^6.0.0"
+    "serialize-javascript": "^6.0.0",
+    "yarm": "^0.4.0",
+    "yarn": "^1.22.19"
   },
   "scripts": {
     "start": "react-scripts start",
