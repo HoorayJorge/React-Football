@@ -7,7 +7,11 @@ class Scoreboard extends Component {
         return(
             <tr>
                 <td>{this.props.heat}</td>
-                <td className="badge-td"><div className="badge"><img src={this.props.logo} alt={this.props.abbreviation} /></div></td>
+                <td className="badge-td">
+                    <div className="badge">
+                        <img src={this.props.logo} alt={this.props.abbreviation} />
+                    </div>
+                </td>
                 <td>{this.props.shortName}</td>
                 <td>{this.props.clock}</td>
                 <td>{this.props.homeScore}</td>
@@ -15,6 +19,7 @@ class Scoreboard extends Component {
                 <td>{this.props.network}</td>
                 <td>{this.props.detail}</td>
                 <td>{this.props.channel}</td>
+                <td>{this.props.start}</td>
             </tr>
         )
     }
