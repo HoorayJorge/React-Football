@@ -46,6 +46,14 @@ class App extends Component {
         this.fetchData(id, name);
     };
 
+    componentDidMount(){
+        this.updateTimer = setInterval(() => this.context.store.dispatch(this.fetchData(this.state.league.id, this.state.league.name)), 30000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+
     fetchData(id, name) {
 
         fetch(this.URL)
@@ -53,42 +61,34 @@ class App extends Component {
             .then((response) => {
                 const rows = [];
                 response.events.map(
-                    (item, index) => {
-                        const { 
-                            logo, 
-                            abbreviation, 
-                            hometeam, 
-                            shortName, 
-                            clock, 
-                            homeScore, 
-                            awayScore, 
-                            network, 
-                            detail, 
-                            heat, 
-                            start} = item;
+                    (item) => {
 
-                        if(response.events[index].competitions[0].broadcasts[0] === undefined){
-                            response.events[index].competitions[0].broadcasts = ([{"names": ["NONE"]}]);
+                        if(item.competitions[0].broadcasts[0] === undefined){
+                            item.competitions[0].broadcasts = ([{"names": ["NONE"]}]);
                         };
                         
-                        response.events[index].status.heat = (
-                            100 - 
-                            Math.abs(parseInt(response.events[index].competitions[0].competitors[0].score) - 
-                            parseInt(response.events[index].competitions[0].competitors[1].score)
-                        ));
+                        if(item.status.type.description === "Scheduled"){
+                            item.status.heat = 0;
+                        }else{
+                            item.status.heat = (
+                                100 - 
+                                Math.abs(parseInt(item.competitions[0].competitors[0].score) - 
+                                parseInt(item.competitions[0].competitors[1].score)
+                            ));
+                        }
 
                         return (
                             rows.push(
-                                { logo: response.events[index].competitions[0].competitors[0].team.logo,
-                                    abbreviation: response.events[index].competitions[0].competitors[0].team.abbreviation, 
-                                    shortName: shortName, 
-                                    clock: response.events[index].status.displayClock, 
-                                    homeScore: response.events[index].competitions[0].competitors[0].score, 
-                                    awayScore: response.events[index].competitions[0].competitors[1].score,
-                                    network: response.events[index].competitions[0].broadcasts[0].names[0], 
-                                    detail: response.events[index].status.type.description,
-                                    heat:  response.events[index].status.heat,
-                                    start: new Date(response.events[index].date).toLocaleString()
+                                { logo: item.competitions[0].competitors[0].team.logo,
+                                    abbreviation: item.competitions[0].competitors[0].team.abbreviation, 
+                                    shortName: item.shortName, 
+                                    clock: item.status.displayClock, 
+                                    homeScore: item.competitions[0].competitors[0].score, 
+                                    awayScore: item.competitions[0].competitors[1].score,
+                                    network: item.competitions[0].broadcasts[0].names[0], 
+                                    detail: item.status.type.description,
+                                    heat:  item.status.heat,
+                                    start: new Date(item.date).toLocaleString()
                                 }
                             )
                         )
@@ -106,7 +106,7 @@ class App extends Component {
 
         if (content.length > 0) {
             table = <thead>
-                <tr><td colSpan="9"><h3>{this.state.selectedLeague}</h3></td></tr>
+                <tr><td colSpan="11"><h3>{this.state.selectedLeague}</h3></td></tr>
                 <tr><th className="position">Heat</th>
                 <th className="team">Home Logo</th>
                 <th className="shortname">Shortname</th>
@@ -130,7 +130,7 @@ class App extends Component {
                     <div className="row">
                         <div className="col-lg-12 text-center mt-2">
                         {this.state.leagues.map(league => (
-                            <button className="btn btn-primary mr-2 mt-2" key={league.id} onClick={() => 
+                            <button className="btn btn-primary mr-2 mt-2" key={league.id} onClick ={() => 
                                 {this.handleSelection(league.id, league.name)}}>{league.name}</button>
                         ))}
                         </div>
