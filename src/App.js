@@ -47,11 +47,13 @@ class App extends Component {
     };
 
     componentDidMount(){
-        this.updateTimer = setInterval(() => this.context.store.dispatch(this.fetchData(this.state.league.id, this.state.league.name)), 30000);
+        this.fetchData();
+        this.updateTimer = setInterval(() => this.forceUpdate(), 30000);
     }
 
     componentWillUnmount() {
-        clearInterval(this.timer);
+        this.fetchData();
+        clearInterval(this.updateTimer);
     }
 
     fetchData(id, name) {
@@ -92,8 +94,10 @@ class App extends Component {
                                 }
                             )
                         )
+
                     }
                 )
+
                 this.setState({ schedule: [...rows] })
         })
             
@@ -106,7 +110,7 @@ class App extends Component {
 
         if (content.length > 0) {
             table = <thead>
-                <tr><td colSpan="11"><h3>{this.state.selectedLeague}</h3></td></tr>
+                <tr><td colSpan="11"><h3>{"CFB Matchup Heat Ratings"}</h3></td></tr>
                 <tr><th className="position">Heat</th>
                 <th className="team">Home Logo</th>
                 <th className="shortname">Shortname</th>
@@ -127,14 +131,6 @@ class App extends Component {
         return (
             <div className="App">
                 <div className="container">
-                    <div className="row">
-                        <div className="col-lg-12 text-center mt-2">
-                        {this.state.leagues.map(league => (
-                            <button className="btn btn-primary mr-2 mt-2" key={league.id} onClick ={() => 
-                                {this.handleSelection(league.id, league.name)}}>{league.name}</button>
-                        ))}
-                        </div>
-                    </div>
                 
                     <div className="table-responsive mt-5">
                         <table className="table">
