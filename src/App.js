@@ -4,6 +4,8 @@ import Scoreboard from './components/Standings';
 
 class App extends Component {
 
+    URL = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=20220930-20221001&limit=200';
+
     state = {
         leagues: [
             { id: 2021, name: 'FBS' }
@@ -37,9 +39,8 @@ class App extends Component {
     };
 
     fetchData(id, name) {
-        URL = 'https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=20220930-20221001&limit=200';
 
-        fetch(URL)
+        fetch(this.URL)
             .then((response) => response.json())
             .then((response) => {
                 const rows = [];
