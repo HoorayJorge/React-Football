@@ -1,24 +1,12 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Demo
-
-![Demo](https://raw.githubusercontent.com/agovah/React-Football/master/app-demo.jpg)
+Simple website to rank College Football games based off a heat index.  Inspired by my friends who are better with a remote than me and Thuuz Sports (RIP).  Data provided by the ESPN API (I'm not sure if its technically public.  Seems too good to be true.  Hopefully it lasts.)
 
 ## Usage
 
 ```
-$ git clone https://github.com/agovah/React-Football.git
-$ cd React-Football-master
+$ git clone https://github.com/HoorayJorge/garlicoin-sports.git
+$ cd garlicoin-sports
 $ npm install
 $ npm start
-```
-
-## API key
-
-1. Get your API key @ https://www.football-data.org/
-2. Insert your API key to *App.js* file :
-```
-const Token = 'YOUR_API_TOKEN'
 ```
 
 ## Available Scripts
@@ -57,33 +45,3 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
