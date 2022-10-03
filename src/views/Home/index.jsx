@@ -39,8 +39,10 @@ export function App() {
 
             return rows.push(
                 {
-                    logo: item.competitions[0].competitors[0].team.logo,
-                    abbreviation: item.competitions[0].competitors[0].team.abbreviation,
+                    awayLogo: item.competitions[0].competitors[1].team.logo,
+                    homeLogo: item.competitions[0].competitors[0].team.logo,
+                    homeAbbreviation: item.competitions[0].competitors[0].team.abbreviation,
+                    awayAbbreviation: item.competitions[0].competitors[1].team.abbreviation,
                     shortName: item.shortName,
                     clock: item.status.displayClock,
                     homeScore: item.competitions[0].competitors[0].score,
@@ -91,11 +93,12 @@ export function App() {
                     <thead className='bg-light'>
                         <tr>
                             <th className="position">Heat</th>
+                            <th className="team">Away Logo</th>
                             <th className="team">Home Logo</th>
                             <th className="shortname">Shortname</th>
                             <th className="played">Clock</th>
-                            <th className="won">Home Score</th>
-                            <th className="draw">Away Score</th>
+                            <th className="won">Away Score</th>
+                            <th className="draw">Home Score</th>
                             <th className="lost">Network</th>
                             <th className="lost">Status</th>
                             <th className="lost">DirecTV Channel</th>
