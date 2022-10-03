@@ -110,7 +110,7 @@ class App extends Component {
 
         if (content.length > 0) {
             table = <thead>
-                <tr><td colSpan="11"><h3>{"CFB Matchup Heat Ratings"}</h3></td></tr>
+                <tr><td colSpan="11"><h3>{"CFB Matchup Heat Index"}</h3></td></tr>
                 <tr><th className="position">Heat</th>
                 <th className="team">Home Logo</th>
                 <th className="shortname">Shortname</th>
