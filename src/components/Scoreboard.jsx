@@ -1,28 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react'
 
-class Scoreboard extends Component {
 
-    render() {
+const Scoreboard = ({ heat, logo, shortName, abbreviation, clock, homeScore, awayScore, network, detail, channel, start }) => {
+    return (
+        <tr>
+            <td>{heat}</td>
+            <td className="badge-td">
+                <img src={logo} alt={abbreviation} />
+            </td>
+            <td>{shortName}</td>
+            <td>{clock}</td>
+            <td>{homeScore}</td>
+            <td>{awayScore}</td>
+            <td>{network}</td>
+            <td>{detail}</td>
+            <td>{channel}</td>
+            <td>{start}</td>
+        </tr>
+    )
+}
 
-        return(
-            <tr>
-                <td>{this.props.heat}</td>
-                <td className="badge-td">
-                    <div className="badge">
-                        <img src={this.props.logo} alt={this.props.abbreviation} />
-                    </div>
-                </td>
-                <td>{this.props.shortName}</td>
-                <td>{this.props.clock}</td>
-                <td>{this.props.homeScore}</td>
-                <td>{this.props.awayScore}</td>
-                <td>{this.props.network}</td>
-                <td>{this.props.detail}</td>
-                <td>{this.props.channel}</td>
-                <td>{this.props.start}</td>
-            </tr>
-        )
-    }
-};
-
-export default Scoreboard;
+export default Scoreboard
