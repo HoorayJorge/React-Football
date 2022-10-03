@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+
+  garlicoin-sports:
+    container_name: sports
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 443:3000
+    restart: always
