@@ -50,7 +50,7 @@ export function App() {
                     network: item.competitions[0].broadcasts[0].names[0],
                     detail: item.status.type.description,
                     heat: item.status.heat,
-                    start: moment(item.date).format('DD/MM/YYYY - hh-mm A')
+                    start: moment(item.date).format('YYYY-MM-DD - hh-mm A')
                 }
             )
         })
