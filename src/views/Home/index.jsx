@@ -29,6 +29,10 @@ export function App() {
                 item.status.heat = 0;
             }
 
+            else if (item.status.type.description === "Final") {
+            item.status.heat = 1;
+            }
+
             else {
                 item.status.heat = (
                     100 -
@@ -36,6 +40,8 @@ export function App() {
                         parseInt(item.competitions[0].competitors[1].score)
                     ));
             }
+
+            item.status.displayClock = item.status.displayClock+" - Q"+item.status.period;
 
             return rows.push(
                 {
