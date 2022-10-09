@@ -4,7 +4,7 @@ import {gitRepoUrl} from '../constants'
 const ForkMe = () => {
     return (
         <div id="forkongithub">
-            <a className='shadow-sm' href={gitRepoUrl} target='_blank'>Fork me on GitHub</a>
+            <a className='shadow-sm' href={gitRepoUrl} target='_blank' rel="noreferrer">View me on GitHub</a>
         </div>
     )
 }

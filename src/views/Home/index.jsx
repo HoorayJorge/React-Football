@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Scoreboard from '../../components/Scoreboard';
-import * as moment from 'moment';
 import axios from 'axios'
 import Helmet from 'react-helmet'
 import { Table } from 'react-bootstrap'
 import { URL, channels } from '../../constants'
-import Spinner from '../../components/Scoreboard';
+import Spinner from '../../components/Spinner';
+import CryptoCard from '../../components/CryptoCard';
 
 
 export function App() {
@@ -132,6 +132,8 @@ export function App() {
                 <h2 className='text-center mb-5'>CFB Matchup Heat Index</h2>
                     {isLoading ? <Spinner /> : renderScoreboard}
             </div>
+
+            <CryptoCard />
         </div>
     )
 

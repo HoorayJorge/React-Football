@@ -1,12 +1,13 @@
 import React from "react";
-import "./spinner.css";
+import { CirclesWithBar} from  'react-loader-spinner'
+
 
 export default function Spinner() {
     return (
         <CirclesWithBar
         height="100"
         width="100"
-        color="#4fa94d"
+        color="#fdd96c"
         wrapperStyle={{}}
         wrapperClass=""
         visible={true}
