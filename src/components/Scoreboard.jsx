@@ -1,24 +1,23 @@
 import React from 'react'
 
 
-const Scoreboard = ({ heat, homeLogo, awayLogo, shortName, homeAbbreviation, awayAbbreviation, clock, homeScore, awayScore, network, detail, channel, start }) => {
+const Scoreboard = ({ heat, homeLogo, awayLogo, shortName, homeAbbreviation, awayAbbreviation, shortDetail, homeScore, awayScore, network, detail, channel}) => {
     return (
         <tr>
             <td>{heat}</td>
+            <td>{shortName}</td>
+            <td>{shortDetail}</td>
             <td className="badge-td">
                 <img src={awayLogo} alt={homeAbbreviation} />
             </td>
+            <td>{awayScore}</td>
             <td className="badge-td">
                 <img src={homeLogo} alt={awayAbbreviation} />
             </td>
-            <td>{shortName}</td>
-            <td>{clock}</td>
-            <td>{awayScore}</td>
             <td>{homeScore}</td>
             <td>{network}</td>
             <td>{detail}</td>
             <td>{channel}</td>
-            <td>{start}</td>
         </tr>
     )
 }

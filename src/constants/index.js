@@ -1,11 +1,11 @@
 import * as moment from 'moment'
 
 //Dates
-const startDateString = moment().format('YYYYMMDD');
+const startDateString = moment().subtract(1, 'days').format('YYYYMMDD');
 const endDateString = moment().add(1, 'weeks').format('YYYYMMDD');
 
 //API Address
-export const URL = (id, name) => {
+export const URL = () => {
     return `https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=${startDateString}-${endDateString}&limit=200`
 }
 
