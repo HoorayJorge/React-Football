@@ -8,8 +8,10 @@ COPY . .
 
 RUN yarn install
 
-RUN yarn build
+ENV HTTPS=true
+ENV SSL_CRT_FILE=/usr/src/app/fullchain.pem
+ENV SSL_KEY_FILE=/usr/src/app/privkey.pem
 
 EXPOSE 3000
 
-CMD ["yarn","start"]
+CMD ["yarn", "start"]
