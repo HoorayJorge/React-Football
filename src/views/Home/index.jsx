@@ -5,15 +5,15 @@ import axios from 'axios'
 import Helmet from 'react-helmet'
 import { Table } from 'react-bootstrap'
 import { URL, channels } from '../../constants'
-
+import Spinner from '../../components/Scoreboard';
 
 
 export function App() {
+
     const [schedule, setSchedule] = useState([])
     const [leagues, setLeagues] = useState([{ id: 2021, name: 'FBS' }])
     const [selectedLeague, setSelectedLeague] = useState('FBS')
-
-
+    const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async (id, name) => {
         const { data } = await axios.get(URL(id, name))
@@ -23,22 +23,33 @@ export function App() {
 
             if (item.competitions[0].broadcasts[0] === undefined) {
                 item.competitions[0].broadcasts = ([{ "names": ["NONE"] }]);
-            }
-
+            } 
             if (item.status.type.description === "Scheduled") {
                 item.status.heat = 0;
-            }
-
+            } 
             else if (item.status.type.description === "Final") {
-            item.status.heat = 1;
-            }
-
+                item.status.heat = 1;
+            } 
             else {
                 item.status.heat = (
                     100 -
                     Math.abs(parseInt(item.competitions[0].competitors[0].score) -
                         parseInt(item.competitions[0].competitors[1].score)
                     ));
+
+                switch(item.status.period) {
+                    case 1:
+                        item.status.heat = item.status.heat - 10;
+                        break;
+                    case 2:
+                        item.status.heat = item.status.heat - 5
+                        break;
+                    case 3:
+                        item.status.heat = item.status.heat - 2
+                        break;
+                    default:
+                
+                }
             }
 
             item.status.displayClock = item.status.displayClock+" - Q"+item.status.period;
@@ -64,13 +75,12 @@ export function App() {
         setSchedule(rows)
     }
 
-
     const handleSelection = (id, name) => {
         fetchData(id, name);
     }
 
     useEffect(() => {
-        fetchData()
+        fetchData().then(setIsLoading(false))
 
         const fetchInterval = setInterval(() => {
             fetchData()
@@ -82,6 +92,41 @@ export function App() {
         return () => clearInterval(fetchInterval);
     }, [])
 
+    const renderScoreboard = (
+
+        <Table className='border shadow-sm' responsive hover>
+            <thead className='bg-light'>
+                <tr>
+                    <th className="position">Heat</th>
+                    <th className="team">Away Logo</th>
+                    <th className="team">Home Logo</th>
+                    <th className="shortname">Shortname</th>
+                    <th className="played">Clock</th>
+                    <th className="won">Away Score</th>
+                    <th className="draw">Home Score</th>
+                    <th className="lost">Network</th>
+                    <th className="lost">Status</th>
+                    <th className="lost">DirecTV Channel</th>
+                    <th className="lost">Start</th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    schedule
+                        ?.sort((a, b) => b.heat - a.heat)
+                        ?.map((schedule, key) => (
+                            <Scoreboard
+                                key={key}
+                                {...schedule}
+                                channel={channels[schedule.network]}
+                            >
+                            </Scoreboard>
+                        ))
+                }
+            </tbody>
+        </Table>
+    )
+
 
     return (
         <div className="App">
@@ -91,41 +136,9 @@ export function App() {
                 <title>Garlicoin Sports</title>
             </Helmet>
 
-
             <div className="container py-5">
                 <h2 className='text-center mb-5'>CFB Matchup Heat Index</h2>
-
-                <Table className='border shadow-sm' responsive hover>
-                    <thead className='bg-light'>
-                        <tr>
-                            <th className="position">Heat</th>
-                            <th className="team">Away Logo</th>
-                            <th className="team">Home Logo</th>
-                            <th className="shortname">Shortname</th>
-                            <th className="played">Clock</th>
-                            <th className="won">Away Score</th>
-                            <th className="draw">Home Score</th>
-                            <th className="lost">Network</th>
-                            <th className="lost">Status</th>
-                            <th className="lost">DirecTV Channel</th>
-                            <th className="lost">Start</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            schedule
-                                ?.sort((a, b) => b.heat - a.heat)
-                                ?.map((schedule, key) => (
-                                    <Scoreboard
-                                        key={key}
-                                        {...schedule}
-                                        channel={channels[schedule.network]}
-                                    >
-                                    </Scoreboard>
-                                ))
-                        }
-                    </tbody>
-                </Table>
+                    {isLoading ? <Spinner /> : renderScoreboard}
             </div>
         </div>
     )
