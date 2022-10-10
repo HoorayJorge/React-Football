@@ -8,7 +8,7 @@ import Spinner from '../../components/Spinner';
 import CryptoCard from '../../components/CryptoCard';
 import EDSBS from '../../components/EDSBS';
 import moment from 'moment';
-import './title.css'
+import './index-title.css'
 
 
 export function App() {

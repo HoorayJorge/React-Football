@@ -11,7 +11,7 @@ function EDSBS({date}) {
                 <div align='center'>
                     <Box bg='#ececec' w='100%' shadow={'0 0 15px #000000'} borderRadius='15px' overflow='hidden'>
                         <span style={
-                            {color: 'white', fontSize: '1rem', fontWeight: 'bold', textShadow: '0 0 10px #000000'}
+                            {color: 'white', fontSize: '1rem', fontWeight: 'bold'}
                         }>
                             SATURDAY</span>
                     </Box>
@@ -23,7 +23,7 @@ function EDSBS({date}) {
                 <div align='center'>
                     <Center bg='#ececec' w='115%' shadow={'0 0 15px #000000'} borderRadius='15px' overflow='hidden'>
                         <span style={
-                            {color: 'white', fontSize: '1rem', fontWeight: 'bold', textShadow: '0 0 2px #000000'}
+                            {color: '#000000', fontSize: '1rem', fontWeight: 'bold', 'font-style': 'italic'}
                         }>
                             {days}:{hours}:{minutes}:{seconds}<br></br>Until Saturday</span>
                     </Center>   
