@@ -14,7 +14,7 @@ export default function CryptoCard() {
                 <Marquee style={{color: 'grey'}} pauseOnHove='true'>
                     <span>
                     ETH: 0x215Fd72fd68A6De8E73D0820548574E9014eBacF - 
-                    GRLC: MTCHG5zDvRM8tk82JV4VsZhQnSiz1W3tYR - 
+                    GRLC: grlc1qpx9pj7xrxwd8k7k77p49rmftq7ucx7ekxx56zg - 
                     ZIL: zil1g99dn7uzhfw6el372cc073v3gppdaxhvlwvs3p - 
                     BTC: bc1q36cfwydts99ece9ju5ne0zhusyy4kl3lphfvtn - 
                     LTC: ltc1q4zgfkmef25ds6mfwk8slx3f8scd0dumc9cjh42 - 

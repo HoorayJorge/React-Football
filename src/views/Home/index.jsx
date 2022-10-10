@@ -6,12 +6,33 @@ import { Table } from 'react-bootstrap'
 import { URL, channels } from '../../constants'
 import Spinner from '../../components/Spinner';
 import CryptoCard from '../../components/CryptoCard';
+import EDSBS from '../../components/EDSBS';
+import moment from 'moment';
+import './title.css'
 
 
 export function App() {
 
     const [schedule, setSchedule] = useState([])
     const [isLoading, setIsLoading] = useState(true);
+
+    const getNextSaturdayDate = () => { 
+
+        const dayINeed = 6 // for Saturday
+        const today = moment().isoWeekday();
+        
+        // if we haven't yet passed the day of the week that I need:
+        if (today <= dayINeed) { 
+          // then just give me this week's instance of that day
+          return moment().isoWeekday(dayINeed);
+        } else {
+          // otherwise, give me *next week's* instance of that same day
+          return moment().add(1, 'weeks').isoWeekday(dayINeed);
+        }
+
+    }       
+
+    const [nextSaturday, setNextSaturday] = useState(getNextSaturdayDate());
 
     const fetchData = async () => {
         const { data } = await axios.get(URL())
@@ -128,8 +149,17 @@ export function App() {
                 <title>Garlicoin Sports</title>
             </Helmet>
 
+            <div style={{position: 'absolute', top: 10, right: 25}}>
+                <EDSBS  date={nextSaturday}/>
+            </div>
+
+            <div class="five" align='center' >
+                <h1>CFB Matchup Heat Index<p></p>
+                    <span align='center'>Garlicoin Sports</span>
+                </h1>
+            </div>
+
             <div className="container py-5">
-                <h2 className='text-center mb-5'>CFB Matchup Heat Index</h2>
                     {isLoading ? <Spinner /> : renderScoreboard}
             </div>
 
